@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Command Center</title>
+    <meta http-equiv="refresh" content="2">
+    <style>
+        body { font-family: 'Courier New', monospace; background: #050505; color: #00ff00; padding: 20px; }
+        .alert { background: #660000; color: white; padding: 30px; text-align: center; border: 4px solid #ff0000; margin-bottom: 20px; display: {{ 'block' if alarm else 'none' }}; }
+        .btn { background: #00ff00; color: black; padding: 15px 25px; font-weight: bold; border: none; cursor: pointer; font-size: 1.1em; }
+        table { width: 100%; border-collapse: collapse; background: #111; }
+        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
+        th { background: #222; }
+        .GRANTED { color: #00ff00; font-weight: bold; }
+        .DENIED { color: #ff0000; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="alert">
+        <h1>🚨 UNAUTHORIZED ACCESS DETECTED 🚨</h1>
+        <form action="/dismiss" method="post"><button type="submit" class="btn">DISMISS ALARM & RESET SYSTEM</button></form>
+    </div>
+    <h2>SYSTEM LOGS (IP: 10.112.185.239)</h2>
+    <table>
+        <tr><th>Time</th><th>Tag ID</th><th>Status</th></tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp.strftime('%H:%M:%S') }}</td>
+            <td>{{ log.tag_id }}</td>
+            <td class="{{ log.status }}">{{ log.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
